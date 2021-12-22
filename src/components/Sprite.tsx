@@ -13,6 +13,7 @@ type SpriteDivProps = {
   height: number,
   backgrondImage: string,
   steps: number,
+  seconds: number,
   backgroundWidth: number,
   backgroundHeight: number,
 }
@@ -36,7 +37,7 @@ const SpriteDiv = styled.div<SpriteDivProps>`
   background-repeat: no-repeat;
   background-position: 0 0;
   background-image: url(${props => props.backgrondImage});
-  animation: ${props => sprite({ backgroundWidht: props.backgroundWidth, backgroundHeight: props.backgroundHeight })} 2s steps(${props => props.steps}) infinite;
+  animation: ${props => sprite({ backgroundWidht: props.backgroundWidth, backgroundHeight: props.backgroundHeight })} ${props => props.seconds}s steps(${props => props.steps}) infinite;
 `
 
 const PreviewDiv = styled.div`
@@ -80,6 +81,7 @@ const Sprite = () => {
     backgroundHeight: 0,
   })
   const [steps, setSteps] = useState(1)
+  const [seconds, setSeconds] = useState(1)
 
   const handleChangeFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
@@ -138,6 +140,11 @@ const Sprite = () => {
     setSteps(num)
   }
 
+  const handleChangeSeconds = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget
+    setSeconds(parseFloat(value))
+  }
+
   return (
     <SpriteWrapperDiv>
       <PreviewDiv>
@@ -146,6 +153,7 @@ const Sprite = () => {
           height={previewSize.height}
           backgrondImage={preview}
           steps={steps}
+          seconds={seconds}
           backgroundWidth={previewSize.backgroundWidth}
           backgroundHeight={previewSize.backgroundHeight}
         >
@@ -170,7 +178,20 @@ const Sprite = () => {
             value={steps}
             onChange={handleChangeSteps}
           />
-          <label htmlFor="spriteSteps">ステップ数:{steps}</label>
+          <label htmlFor="spriteSteps">ステップ数 : {steps}</label>
+        </div>
+        <div>
+          <input
+            type="range"
+            id="spriteSteps"
+            name="spriteSteps"
+            min="1"
+            max="10"
+            step="0.1"
+            value={seconds}
+            onChange={handleChangeSeconds}
+          />
+          <label htmlFor="spriteSteps">秒数 : {seconds} sec</label>
         </div>
         <FormTable>
           <tr>
