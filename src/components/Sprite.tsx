@@ -113,7 +113,7 @@ const Sprite = () => {
       img.src = objectUrl;
       setPreview(objectUrl)
     }
-  }, [])
+  }, [steps])
 
   const handleChangeSteps = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget
