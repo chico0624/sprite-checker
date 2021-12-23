@@ -201,10 +201,10 @@ const Sprite = () => {
             <th>高さ</th><td>{previewSize.height}</td>
           </tr>
           <tr>
-            <th>背景移動距離（横）</th><td>{previewSize.width}</td>
+            <th>背景移動距離（横）</th><td>{previewSize.backgroundWidth}</td>
           </tr>
           <tr>
-            <th>背景移動距離（縦）</th><td>{previewSize.backgroundWidth}</td>
+            <th>背景移動距離（縦）</th><td>{previewSize.backgroundHeight}</td>
           </tr>
         </FormTable>
       </FormDiv>
