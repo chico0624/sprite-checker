@@ -1,9 +1,10 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, DragEvent, useCallback, useState } from "react"
 import styled, { keyframes } from "styled-components"
 
 
 const SpriteWrapperDiv = styled.div`
   display: flex;
+  flex-wrap: wrap;
   padding: 20px;
   gap: 20px;
 `
@@ -38,23 +39,35 @@ const SpriteDiv = styled.div<SpriteDivProps>`
   background-position: 0 0;
   background-image: url(${props => props.backgrondImage});
   animation: ${props => sprite({ backgroundWidht: props.backgroundWidth, backgroundHeight: props.backgroundHeight })} ${props => props.seconds}s steps(${props => props.steps}) infinite;
+  z-index: 1;
 `
 
-const PreviewDiv = styled.div`
+type PreviewDivType = {
+  isDragOver: boolean
+}
+const PreviewDiv = styled.div<PreviewDivType>`
   position: relative;
-  width: 50%;
+  width: 100%;
+  @media screen and (min-width:768px) {
+    width: calc(50% - 10px);
+  }
   &::before {
     content: '';
     display: block;
     padding-top: 100%;
   }
-  border: 1px solid #666;
+  border: 1px dashed #666;
   border-radius: 10px;
   padding: 20px;
+  background-color: ${props => props.isDragOver ? "#caf0f8": "#fff"};
+  overflow: hidden;
 `
 
 const FormDiv = styled.div`
-  width: 50%;
+  width: 100%;
+  @media screen and (min-width:768px) {
+    width: calc(50% - 10px);
+  }
   div {
     margin-bottom: 20px;
   }
@@ -72,6 +85,20 @@ const FormTable = styled.table`
   }
 `
 
+const DropInput = styled.input`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  opacity: 0;
+  z-index: 1;
+  &:hover {
+    background-color: black;
+  }
+`
+
 const Sprite = () => {
   const [preview, setPreview] = useState('');
   const [previewSize, setPreviewSize] = useState({
@@ -82,6 +109,7 @@ const Sprite = () => {
   })
   const [steps, setSteps] = useState(1)
   const [seconds, setSeconds] = useState(1)
+  const [dragOver, setDragOver] = useState(false)
 
   const handleChangeFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
@@ -136,7 +164,6 @@ const Sprite = () => {
         }
       )
     }
-
     setSteps(num)
   }
 
@@ -145,9 +172,38 @@ const Sprite = () => {
     setSeconds(parseFloat(value))
   }
 
+  // drag and drop
+  const handleDragOver = useCallback((e: DragEvent) => {
+    setDragOver(true)
+    e.stopPropagation()
+    e.preventDefault()
+  }, [dragOver])
+
+  const handleDrop = (e:DragEvent) => {
+    setDragOver(false)
+    e.stopPropagation()
+  }
+
+  const handleDragLeave = (e:DragEvent) => {
+    console.log("aaa")
+    setDragOver(false)
+    e.stopPropagation()
+  }
+
   return (
     <SpriteWrapperDiv>
-      <PreviewDiv>
+      <PreviewDiv
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        onDragLeave={handleDragLeave}
+        isDragOver={dragOver}
+      >
+        <DropInput
+          type="file"
+          name="spriteImg"
+          onChange={handleChangeFile}
+          accept="image/png,image/jpeg,image/gif"
+        />
         <SpriteDiv
           width={previewSize.width}
           height={previewSize.height}
@@ -161,13 +217,6 @@ const Sprite = () => {
       </PreviewDiv>
 
       <FormDiv>
-        <div>
-          <input
-            type="file"
-            name="spriteImg"
-            onChange={handleChangeFile}
-          />
-        </div>
         <div>
           <input
             type="range"
@@ -194,18 +243,20 @@ const Sprite = () => {
           <label htmlFor="spriteSteps">秒数 : {seconds} sec</label>
         </div>
         <FormTable>
-          <tr>
-            <th>横幅</th><td>{previewSize.width}</td>
-          </tr>
-          <tr>
-            <th>高さ</th><td>{previewSize.height}</td>
-          </tr>
-          <tr>
-            <th>背景移動距離（横）</th><td>{previewSize.backgroundWidth}</td>
-          </tr>
-          <tr>
-            <th>背景移動距離（縦）</th><td>{previewSize.backgroundHeight}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>横幅</th><td>{previewSize.width}</td>
+            </tr>
+            <tr>
+              <th>高さ</th><td>{previewSize.height}</td>
+            </tr>
+            <tr>
+              <th>背景移動距離（横）</th><td>{previewSize.backgroundWidth}</td>
+            </tr>
+            <tr>
+              <th>背景移動距離（縦）</th><td>{previewSize.backgroundHeight}</td>
+            </tr>
+          </tbody>
         </FormTable>
       </FormDiv>
     </SpriteWrapperDiv>
