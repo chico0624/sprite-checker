@@ -233,7 +233,7 @@ const Sprite = () => {
     setDragOver(true)
     e.stopPropagation()
     e.preventDefault()
-  }, [dragOver])
+  }, [])
 
   const handleDrop = (e: DragEvent) => {
     setDragOver(false)
