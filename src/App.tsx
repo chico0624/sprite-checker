@@ -7,9 +7,16 @@ const AppDiv = styled.div`
   max-width: 1000px;
   margin: auto;
 `
+
+const Title = styled.h1`
+  margin: 20px;
+  text-align: center;
+`
+
 function App() {
   return (
     <AppDiv>
+      <Title>CSSスプライトアニメーション実験場</Title>
       <Sprite></Sprite>
     </AppDiv>
   );

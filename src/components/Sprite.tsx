@@ -45,6 +45,7 @@ const SpriteDiv = styled.div<SpriteDivProps>`
 type PreviewDivType = {
   isDragOver: boolean
 }
+
 const PreviewDiv = styled.div<PreviewDivType>`
   position: relative;
   width: 100%;
@@ -56,10 +57,10 @@ const PreviewDiv = styled.div<PreviewDivType>`
     display: block;
     padding-top: 100%;
   }
-  border: 1px dashed #666;
+  border: 2px dashed #666;
   border-radius: 10px;
   padding: 20px;
-  background-color: ${props => props.isDragOver ? "#caf0f8": "#fff"};
+  background-color: ${props => props.isDragOver ? "#b7e4c7" : "#fff"};
   overflow: hidden;
 `
 
@@ -78,10 +79,58 @@ const FormDiv = styled.div`
 
 const FormTable = styled.table`
   border-collapse: collapse;
+  width: 100%;
   text-align: left;
   td,th {
-    border: 1px solid #666;
-    padding: 10px;
+    border: 1px solid #cacaca;
+    padding: 10px 20px;
+  }
+  th {
+    width: 50%;
+    font-weight: normal;
+  }
+  td {
+    text-align: right;
+  }
+`
+const FormLabel = styled.label`
+  display: block;
+  margin-bottom: 20px;
+  padding-left: 1em;
+  border-left: 5px solid #52b788;
+  font-weight: bold;
+`
+
+const RangeInput = styled.input`
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background-color: #95d5b2;
+  height: 14px;
+  width: 100%;
+  border-radius: 10px;
+  border: solid 3px #dff1ff;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #52b788;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+  }
+  &::-moz-range-thumb {
+    background: #52b788;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.15);
+    border: none;
+  }
+  &::-moz-focus-outer {
+    border: 0;
+  }
+  &:active::-webkit-slider-thumb {
+    box-shadow: 0px 5px 10px -2px rgba(0, 0, 0, 0.3);
   }
 `
 
@@ -97,6 +146,13 @@ const DropInput = styled.input`
   &:hover {
     background-color: black;
   }
+`
+
+const GuidanceDiv = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 const Sprite = () => {
@@ -179,13 +235,12 @@ const Sprite = () => {
     e.preventDefault()
   }, [dragOver])
 
-  const handleDrop = (e:DragEvent) => {
+  const handleDrop = (e: DragEvent) => {
     setDragOver(false)
     e.stopPropagation()
   }
 
-  const handleDragLeave = (e:DragEvent) => {
-    console.log("aaa")
+  const handleDragLeave = (e: DragEvent) => {
     setDragOver(false)
     e.stopPropagation()
   }
@@ -204,6 +259,11 @@ const Sprite = () => {
           onChange={handleChangeFile}
           accept="image/png,image/jpeg,image/gif"
         />
+        {!preview &&
+          <GuidanceDiv>
+            ここにファイルをドロップしてください(jpeg/png/gif)
+          </GuidanceDiv>
+        }
         <SpriteDiv
           width={previewSize.width}
           height={previewSize.height}
@@ -218,43 +278,57 @@ const Sprite = () => {
 
       <FormDiv>
         <div>
-          <input
+          <FormLabel
+            htmlFor="spriteSteps"
+          >
+          アニメーションのステップ数
+          </FormLabel>
+          <RangeInput
             type="range"
             id="spriteSteps"
             name="spriteSteps"
             min="1"
-            max="30"
+            max="50"
             value={steps}
             onChange={handleChangeSteps}
           />
-          <label htmlFor="spriteSteps">ステップ数 : {steps}</label>
         </div>
         <div>
-          <input
+        <FormLabel
+            htmlFor="spriteSteps"
+          >
+          アニメーションが完了するまでの時間
+          </FormLabel>
+          <RangeInput
             type="range"
-            id="spriteSteps"
-            name="spriteSteps"
+            id="spriteSeconds"
+            name="spriteSeconds"
             min="1"
             max="10"
             step="0.1"
             value={seconds}
             onChange={handleChangeSeconds}
           />
-          <label htmlFor="spriteSteps">秒数 : {seconds} sec</label>
         </div>
         <FormTable>
           <tbody>
             <tr>
-              <th>横幅</th><td>{previewSize.width}</td>
+              <th>ステップ数</th><td>{steps}</td>
             </tr>
             <tr>
-              <th>高さ</th><td>{previewSize.height}</td>
+              <th>秒数</th><td>{seconds} sec</td>
             </tr>
             <tr>
-              <th>背景移動距離（横）</th><td>{previewSize.backgroundWidth}</td>
+              <th>横幅</th><td>{previewSize.width} px</td>
             </tr>
             <tr>
-              <th>背景移動距離（縦）</th><td>{previewSize.backgroundHeight}</td>
+              <th>高さ</th><td>{previewSize.height} px</td>
+            </tr>
+            <tr>
+              <th>背景移動距離（横）</th><td>{previewSize.backgroundWidth} px</td>
+            </tr>
+            <tr>
+              <th>背景移動距離（縦）</th><td>{previewSize.backgroundHeight} px</td>
             </tr>
           </tbody>
         </FormTable>
