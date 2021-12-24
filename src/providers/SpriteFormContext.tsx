@@ -1,6 +1,4 @@
-import { Dispatch, createContext, ReactChild, useContext, useState } from "react"
-
-
+import { Dispatch, createContext, ReactChild,  useState } from "react"
 
 const initialState = {
     steps: 1,
