@@ -1,6 +1,10 @@
 import './App.css';
-import Sprite from './components/Sprite';
+import { Routes, Route } from 'react-router-dom';
 import styled from "styled-components"
+
+// pages
+import SpritePage from './pages/SpritePages';
+import TopPage from './pages/TopPages';
 
 const AppDiv = styled.div`
   width: 98%;
@@ -8,16 +12,13 @@ const AppDiv = styled.div`
   margin: auto;
 `
 
-const Title = styled.h1`
-  margin: 20px;
-  text-align: center;
-`
-
 function App() {
   return (
     <AppDiv>
-      <Title>CSSスプライトアニメーション実験場</Title>
-      <Sprite></Sprite>
+      <Routes>
+        <Route path="/" element={<TopPage />}/>
+        <Route path="/sprite" element={<SpritePage />} />
+      </Routes>
     </AppDiv>
   );
 }
