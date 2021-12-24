@@ -15,10 +15,12 @@ const AppDiv = styled.div`
 function App() {
   return (
     <AppDiv>
-      <Routes>
-        <Route path="/" element={<TopPage />}/>
-        <Route path="/sprite" element={<SpritePage />} />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<TopPage />} />
+          <Route path="/sprite" element={<SpritePage />} />
+        </Routes>
+      </main>
     </AppDiv>
   );
 }
