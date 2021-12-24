@@ -1,12 +1,15 @@
 import Title from "../components/Title"
 import Sprite from "../components/Sprite"
+import { SpriteFormContextProvider } from "../providers/SpriteFormContext"
 
 const SpritePage = () => {
     return (
-        <>
-            <Title title="CSSスプライトアニメーションチェッカー"></Title>
-            <Sprite></Sprite>
-        </>
+        <SpriteFormContextProvider>
+            <>
+                <Title title="CSSスプライトアニメーションチェッカー"></Title>
+                <Sprite></Sprite>
+            </>
+        </SpriteFormContextProvider>
     )
 }
 

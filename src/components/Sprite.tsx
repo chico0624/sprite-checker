@@ -1,5 +1,6 @@
-import { ChangeEvent, DragEvent, useCallback, useState } from "react"
-import styled, { keyframes } from "styled-components"
+import { ChangeEvent, useCallback, useContext, useState } from "react"
+import styled from "styled-components"
+import { SpriteFormContext } from "../providers/SpriteFormContext"
 import Preview from "./Preview"
 
 
@@ -21,7 +22,6 @@ const FormDiv = styled.div`
     display: block;
   }
 `
-
 const FormTable = styled.table`
   border-collapse: collapse;
   width: 100%;
@@ -80,6 +80,12 @@ const RangeInput = styled.input`
 `
 
 const Sprite = () => {
+  const {steps, setSteps, seconds, setSeconds} = useContext(SpriteFormContext)
+
+  if (!setSteps || !setSeconds) {
+    throw new Error("init failed.");
+  }
+
   const [preview, setPreview] = useState('');
   const [previewSize, setPreviewSize] = useState({
     width: 0,
@@ -87,11 +93,8 @@ const Sprite = () => {
     backgroundWidth: 0,
     backgroundHeight: 0,
   })
-  const [steps, setSteps] = useState(1)
-  const [seconds, setSeconds] = useState(1)
 
   const handleChangeFile = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    console.log("発火")
     const { files } = e.currentTarget;
     if (files) {
       const objectUrl = window.URL.createObjectURL(files[0])
@@ -157,8 +160,6 @@ const Sprite = () => {
       <Preview
         preview={preview}
         previewSize={previewSize}
-        steps={steps}
-        seconds={seconds}
         handleChangeFile={handleChangeFile}
       ></Preview>
       <FormDiv>

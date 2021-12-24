@@ -1,6 +1,7 @@
 
-import React, { DragEvent, useState, useCallback } from "react"
+import React, { DragEvent, useState, useCallback, useContext } from "react"
 import styled, { keyframes } from "styled-components"
+import { SpriteFormContext } from "../providers/SpriteFormContext"
 
 type SpriteDivProps = {
     width: number,
@@ -81,13 +82,12 @@ const GuidanceDiv = styled.div`
 
 type PropsType = {
     preview: string,
-    steps: number,
-    seconds: number,
     previewSize: { width: number, height: number, backgroundWidth: number, backgroundHeight: number }
     handleChangeFile: Function
 }
 
-const Preview: React.FC<PropsType> = ({ preview, steps, seconds, previewSize, handleChangeFile }) => {
+const Preview: React.FC<PropsType> = ({ preview, previewSize, handleChangeFile }) => {
+    const {steps, seconds} = useContext(SpriteFormContext)
     const [dragOver, setDragOver] = useState(false)
 
     // drag and drop
