@@ -5,6 +5,9 @@ import { NAVI } from "../constants/navi"
 
 const LinkListDiv = styled.div`
     width: 100%;
+    & > div{
+        margin-bottom: 20px;
+    }
 `
 
 const TopPage = () => {
@@ -14,13 +17,13 @@ const TopPage = () => {
             <aside>
                 <LinkListDiv>
                     {NAVI.map(n => {
-                        return (<LinkCard
+                        return (<div><LinkCard
                             to={n.to}
                             title={n.title}
                             description={n.description}
                             icon={n.icon}
                         >
-                        </LinkCard>
+                        </LinkCard></div>
                         )
                     })}
                 </LinkListDiv>
