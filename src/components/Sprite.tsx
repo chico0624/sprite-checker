@@ -1,12 +1,14 @@
-import { ChangeEvent, useCallback, useContext, useState } from "react"
+import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { SpriteFormContext } from "../providers/SpriteFormContext"
 import Preview from "./Preview"
+import SyntaxHilight from "./SyntaxHilight"
 
 
 const SpriteWrapperDiv = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   padding: 20px;
   gap: 20px;
 `
@@ -26,6 +28,7 @@ const FormTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   text-align: left;
+  margin: 20px 0;
   td,th {
     border: 1px solid #cacaca;
     padding: 10px 20px;
@@ -80,7 +83,8 @@ const RangeInput = styled.input`
 `
 
 const Sprite = () => {
-  const {steps, setSteps, seconds, setSeconds} = useContext(SpriteFormContext)
+  const { steps, setSteps, seconds, setSeconds } = useContext(SpriteFormContext)
+  const [code, setCode] = useState("");
 
   if (!setSteps || !setSeconds) {
     throw new Error("init failed.");
@@ -155,6 +159,27 @@ const Sprite = () => {
     setSeconds(parseFloat(value))
   }
 
+  useEffect(() => {
+    const nowStyle = `
+      @keyframes sprite {
+        to {
+          background-position: ${previewSize.backgroundWidth}px ${previewSize.backgroundHeight}px;
+        }
+      }
+      .your-class {
+        width: ${previewSize.width};
+        height: ${previewSize.height};
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-image: url(your-path});
+        animation: sprite ${seconds}s steps(${steps}) infinite;
+      }
+    `
+    setCode(nowStyle)
+
+
+  }, [steps, seconds, preview, previewSize])
+
   return (
     <SpriteWrapperDiv>
       <Preview
@@ -167,7 +192,7 @@ const Sprite = () => {
           <FormLabel
             htmlFor="spriteSteps"
           >
-          アニメーションのステップ数
+            アニメーションのステップ数
           </FormLabel>
           <RangeInput
             type="range"
@@ -180,10 +205,10 @@ const Sprite = () => {
           />
         </div>
         <div>
-        <FormLabel
+          <FormLabel
             htmlFor="spriteSteps"
           >
-          アニメーションが完了するまでの時間
+            アニメーションが完了するまでの時間
           </FormLabel>
           <RangeInput
             type="range"
@@ -218,6 +243,13 @@ const Sprite = () => {
             </tr>
           </tbody>
         </FormTable>
+        <FormLabel
+          htmlFor="spriteSteps"
+        >
+          コードスニペット
+        </FormLabel>
+        <SyntaxHilight code={code} language="css"></SyntaxHilight>
+
       </FormDiv>
     </SpriteWrapperDiv>
   )
