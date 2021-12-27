@@ -5,6 +5,7 @@ import styled from "styled-components"
 // pages
 import SpritePage from './pages/SpritePages';
 import TopPage from './pages/TopPages';
+import useTracking from './hooks/useTracking';
 
 const AppDiv = styled.div`
   width: 98%;
@@ -13,6 +14,8 @@ const AppDiv = styled.div`
 `
 
 function App() {
+  useTracking();
+  
   return (
     <AppDiv>
       <main>
