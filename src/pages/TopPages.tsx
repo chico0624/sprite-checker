@@ -17,7 +17,7 @@ const TopPage = () => {
             <aside>
                 <LinkListDiv>
                     {NAVI.map(n => {
-                        return (<div><LinkCard
+                        return (<div key={n.to}><LinkCard
                             to={n.to}
                             title={n.title}
                             description={n.description}
