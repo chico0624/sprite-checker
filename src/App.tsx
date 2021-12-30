@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import styled from "styled-components"
 
 // pages
-import SpritePage from './pages/SpritePages';
-import TopPage from './pages/TopPages';
+import SpritePage from './pages/SpritePage';
+import TopPage from './pages/TopPage';
 import useTracking from './hooks/useTracking';
 
 const AppDiv = styled.div`
