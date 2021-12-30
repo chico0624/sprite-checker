@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { hex2rgb } from "../../lib/color"
 
 
 type PreviewWrapperDivProps = {
@@ -22,7 +23,7 @@ const PreviewDiv = styled.div<PreviewDivProps>`
     background-color: #${props => props.hex};
 `
 
-const HexP = styled.p`
+const ColorPropertyP = styled.p`
     color: #000;
     cursor: pointer;
     padding: 5px 0;
@@ -36,11 +37,14 @@ type PropsType = {
 
 const Preview: React.FC<PropsType> = ({ hex, width, height = 70 }) => {
 
+    const [r, g, b] = hex2rgb(hex)
+
     return (
         <PreviewWrapperDiv width={width}>
             <PreviewDiv hex={hex} width={width} height={height}>
             </PreviewDiv>
-            <HexP>#{hex}</HexP>
+            <ColorPropertyP>#{hex}</ColorPropertyP>
+            <ColorPropertyP>rgb:{`(${r}, ${g}, ${b})`}</ColorPropertyP>
         </PreviewWrapperDiv>
     )
 
