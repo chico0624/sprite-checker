@@ -6,6 +6,7 @@ import styled from "styled-components"
 import SpritePage from './pages/SpritePage';
 import TopPage from './pages/TopPage';
 import useTracking from './hooks/useTracking';
+import ColorPage from './pages/ColorPage';
 
 const AppDiv = styled.div`
   width: 98%;
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<TopPage />} />
           <Route path="/sprite" element={<SpritePage />} />
+          <Route path="/color" element={<ColorPage />} />
         </Routes>
       </main>
     </AppDiv>

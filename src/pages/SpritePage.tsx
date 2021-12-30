@@ -6,7 +6,7 @@ const SpritePage = () => {
     return (
         <SpriteFormContextProvider>
             <>
-                <Title title="CSSスプライトアニメーションチェッカー"></Title>
+                <Title title="CSS スプライトアニメーション"></Title>
                 <Sprite></Sprite>
             </>
         </SpriteFormContextProvider>
