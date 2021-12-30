@@ -1,5 +1,5 @@
 import Title from "../components/Title"
-import Sprite from "../components/Sprite"
+import Sprite from "../components/Sprite/Sprite"
 import { SpriteFormContextProvider } from "../providers/SpriteFormContext"
 
 const SpritePage = () => {

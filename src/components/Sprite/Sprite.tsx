@@ -1,8 +1,8 @@
 import { ChangeEvent, useCallback, useContext, useEffect, useState } from "react"
 import styled from "styled-components"
-import { SpriteFormContext } from "../providers/SpriteFormContext"
+import { SpriteFormContext } from "../../providers/SpriteFormContext"
 import Preview from "./Preview"
-import SyntaxHilight from "./SyntaxHilight"
+import SyntaxHilight from "../SyntaxHilight"
 
 
 const SpriteWrapperDiv = styled.div`

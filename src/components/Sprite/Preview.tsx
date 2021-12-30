@@ -1,7 +1,7 @@
 
 import React, { DragEvent, useState, useCallback, useContext } from "react"
 import styled, { keyframes } from "styled-components"
-import { SpriteFormContext } from "../providers/SpriteFormContext"
+import { SpriteFormContext } from "../../providers/SpriteFormContext"
 
 type SpriteDivProps = {
     width: number,
