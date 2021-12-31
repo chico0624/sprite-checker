@@ -50,10 +50,10 @@ const Form: React.FC = () => {
                     <span>#</span>
                     <InputField name="hex" type="text" onChange={handleChangeHex} value={hex} maxLength={6} />
                 </div>
-                <div>
+                {/* <div>
                     <InputField name="ratio" type="number" onChange={handleChangeRatio} value={ratio} maxLength={3} max={100} />
                     <span>%</span>
-                </div>
+                </div> */}
             </InputFieldWrapperDiv>
             <Preview hex={hex} height={100} />
         </FormDiv>
