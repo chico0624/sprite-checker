@@ -6,7 +6,7 @@ const ColorPage = () => {
     return (
         <ColorFormContextProvider>
             <>
-                <Title title="Sass Color"></Title>
+                <Title title="Hex to RGB Color"></Title>
                 <Form></Form>
             </>
         </ColorFormContextProvider>
