@@ -1,5 +1,5 @@
 export const hex2rgb = (hex: string): number[] => {
-    if (hex.length == 3) {
+    if (hex.length === 3) {
         hex = hex.slice(0, 1) + hex.slice(0, 1) + hex.slice(1, 2) + hex.slice(1, 2) + hex.slice(2, 3) + hex.slice(2, 3)
     }
 
